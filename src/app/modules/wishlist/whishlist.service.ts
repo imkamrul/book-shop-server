@@ -65,7 +65,7 @@ export const deleteWhishListById = async (
   id: Types.ObjectId
 ): Promise<IWhishList[] | null> => {
   const findBookInWhishList = await WhishList.findById(id).populate("book");
-  console.log("findBookInWhishList :", findBookInWhishList);
+
   let deletedWhishList: any;
   if (!findBookInWhishList) {
     throw new ApiError(
@@ -98,5 +98,19 @@ export const getWhishListById = async (
   id: Types.ObjectId
 ): Promise<IWhishList[] | null> => {
   const result = await WhishList.find({ buyer: id }).populate("book");
+  return result;
+};
+export const updateWhishListById = async (
+  id: Types.ObjectId,
+  currentStatus: string
+): Promise<IWhishList | null> => {
+  const result = await WhishList.findOneAndUpdate(
+    { _id: id },
+
+    { currentStatus },
+    {
+      new: true,
+    }
+  );
   return result;
 };

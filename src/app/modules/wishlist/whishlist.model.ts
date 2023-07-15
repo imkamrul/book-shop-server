@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { currentStatus } from "./whishlist.constant";
 import { IWhishList, WhishListModel } from "./whishlist.interface";
 
 const WhishListSchema = new Schema<IWhishList>(
@@ -12,6 +13,12 @@ const WhishListSchema = new Schema<IWhishList>(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
+    },
+    currentStatus: {
+      type: String,
+      required: true,
+      enum: currentStatus,
+      default: currentStatus[0],
     },
   },
   {

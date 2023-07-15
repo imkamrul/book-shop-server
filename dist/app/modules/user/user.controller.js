@@ -60,7 +60,6 @@ exports.logInUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
 }));
 exports.getMyProfile = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;
-    console.log("user :", user);
     if (!user) {
         return (0, response_1.default)(res, {
             success: false,

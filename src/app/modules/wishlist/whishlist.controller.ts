@@ -7,6 +7,7 @@ import {
   deleteWhishListById,
   getWhishListById,
   saveWhishList,
+  updateWhishListById,
 } from "./whishlist.service";
 
 export const createWhishList: RequestHandler = catchAsync(
@@ -31,6 +32,21 @@ export const getSingleWhishList: RequestHandler = catchAsync(
       success: true,
       statusCode: httpStatus.OK,
       message: "Whishlist retrieved successfully",
+      data: result,
+    });
+  }
+);
+export const updateSingleWhishList: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const { currentStatus } = req.body;
+
+    const result = await updateWhishListById(id as any, currentStatus);
+
+    sendResponse<IWhishList>(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Whishlist update successfully",
       data: result,
     });
   }

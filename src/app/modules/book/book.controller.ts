@@ -12,9 +12,8 @@ import {
 } from "./book.service";
 export const createBook: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
-    // console.log("req :", req);
     const bookData = req.body;
-    console.log("bookData :", bookData);
+
     const result = await saveBook(bookData);
 
     sendResponse<IBook>(res, {

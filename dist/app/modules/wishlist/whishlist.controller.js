@@ -12,62 +12,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateBookById = exports.deleteBookById = exports.getBookById = exports.getBooks = exports.createBook = void 0;
+exports.deleteSingleWhishList = exports.updateSingleWhishList = exports.getSingleWhishList = exports.createWhishList = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../common/catchAsync"));
 const response_1 = __importDefault(require("../../common/response"));
-const book_service_1 = require("./book.service");
-exports.createBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const bookData = req.body;
-    const result = yield (0, book_service_1.saveBook)(bookData);
+const whishlist_service_1 = require("./whishlist.service");
+exports.createWhishList = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const orderData = req.body;
+    const result = yield (0, whishlist_service_1.saveWhishList)(orderData);
     (0, response_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
-        message: "Book created successfully",
+        message: "Whishlist created successfully",
         data: result,
     });
 }));
-exports.getBooks = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield (0, book_service_1.getAllBook)();
-    (0, response_1.default)(res, {
-        success: true,
-        statusCode: http_status_1.default.OK,
-        message: "Book retrieved successfully",
-        data: result,
-    });
-}));
-exports.getBookById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getSingleWhishList = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
-    const result = yield (0, book_service_1.getSingleBook)(id);
+    const result = yield (0, whishlist_service_1.getWhishListById)(id);
     (0, response_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
-        message: "Book retrieved successfully",
+        message: "Whishlist retrieved successfully",
         data: result,
     });
 }));
-exports.deleteBookById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+exports.updateSingleWhishList = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
-    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
-    const result = yield (0, book_service_1.deleteBook)(id, userId);
+    const { currentStatus } = req.body;
+    const result = yield (0, whishlist_service_1.updateWhishListById)(id, currentStatus);
     (0, response_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
-        message: "Book deleted successfully",
+        message: "Whishlist update successfully",
         data: result,
     });
 }));
-exports.updateBookById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b;
+exports.deleteSingleWhishList = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
-    const updatedData = req.body;
-    const userId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.id;
-    const result = yield (0, book_service_1.updateBook)(id, userId, updatedData);
+    const result = yield (0, whishlist_service_1.deleteWhishListById)(id);
     (0, response_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
-        message: "Books updated successfully",
+        message: "Whishlist deleted successfully",
         data: result,
     });
 }));

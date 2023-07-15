@@ -6,14 +6,24 @@ import {
   createWhishList,
   deleteSingleWhishList,
   getSingleWhishList,
+  updateSingleWhishList,
 } from "./whishlist.controller";
-import { WhishListZodSchema } from "./whishlist.validation";
+import {
+  WhishListUpdateZodSchema,
+  WhishListZodSchema,
+} from "./whishlist.validation";
 const router = express.Router();
 router.post(
   "/",
   auth(...role),
   validateRequest(WhishListZodSchema),
   createWhishList
+);
+router.patch(
+  "/:id",
+  auth(...role),
+  validateRequest(WhishListUpdateZodSchema),
+  updateSingleWhishList
 );
 router.get("/:id", auth(...role), getSingleWhishList);
 router.delete("/:id", auth(...role), deleteSingleWhishList);

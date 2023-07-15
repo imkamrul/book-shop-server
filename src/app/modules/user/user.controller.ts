@@ -61,7 +61,7 @@ export const logInUser: RequestHandler = catchAsync(
 export const getMyProfile: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const { user } = req;
-    console.log("user :", user);
+
     if (!user) {
       return sendResponse(res, {
         success: false,

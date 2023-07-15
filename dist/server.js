@@ -16,7 +16,6 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const app_1 = __importDefault(require("./app"));
 const index_1 = __importDefault(require("./config/index"));
 process.on("uncaughtException", (error) => {
-    console.log(error);
     process.exit(1);
 });
 let server;
@@ -24,7 +23,6 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield mongoose_1.default.connect(index_1.default.database_url);
-            console.log(`Database is connected successfully`);
             server = app_1.default.listen(index_1.default.port, () => {
                 console.log(`Application  listening on port ${index_1.default.port}`);
             });
@@ -35,7 +33,6 @@ function main() {
         process.on("unhandledRejection", (error) => {
             if (server) {
                 server.close(() => {
-                    console.log(error);
                     process.exit(1);
                 });
             }
@@ -47,7 +44,6 @@ function main() {
 }
 main();
 process.on("SIGTERM", () => {
-    console.log("SIGTERM is received");
     if (server) {
         server.close();
     }
