@@ -50,7 +50,7 @@ const deleteBook = (id, userId) => __awaiter(void 0, void 0, void 0, function* (
     if (bookFind.seller.toString() !== userId) {
         throw new ApiError_1.default(http_status_1.default.FORBIDDEN, "Forbidden Access");
     }
-    const result = yield book_model_1.Book.findById({ _id: id });
+    const result = yield book_model_1.Book.findByIdAndDelete({ _id: id });
     if (!result) {
         throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Book not found !");
     }

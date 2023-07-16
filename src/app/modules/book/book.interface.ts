@@ -22,19 +22,3 @@ export type IBook = {
 };
 
 export type BookModel = Model<IBook, Record<string, unknown>>;
-
-export type ICowsFilters = {
-  sortBy?: string;
-  sortOrder?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  location?: string;
-  rating?: number;
-  title?: string;
-  author?: string;
-  genre?: string;
-  publishDate?: Date;
-  totalDownload?: number;
-  price?: number;
-  searchTerm?: string;
-};

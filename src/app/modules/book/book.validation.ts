@@ -10,9 +10,12 @@ export const reviewZodSchema = z.object({
     name: z.string({
       required_error: "Name field is required ",
     }),
-    rating: z.number({
-      required_error: "Rating field is required ",
-    }),
+    rating: z
+      .number({
+        required_error: "Rating field is required ",
+      })
+      .min(0)
+      .max(5),
     message: z.string({
       required_error: "Message field is required ",
     }),

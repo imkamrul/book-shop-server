@@ -15,6 +15,7 @@ import {
 export const createBook: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const bookData = req.body;
+    console.log("bookData :", bookData);
 
     const result = await saveBook(bookData);
 

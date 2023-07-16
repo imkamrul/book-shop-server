@@ -19,6 +19,7 @@ const response_1 = __importDefault(require("../../common/response"));
 const book_service_1 = require("./book.service");
 exports.createBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const bookData = req.body;
+    console.log("bookData :", bookData);
     const result = yield (0, book_service_1.saveBook)(bookData);
     (0, response_1.default)(res, {
         success: true,

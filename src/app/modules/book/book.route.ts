@@ -26,8 +26,8 @@ router.post(
   createReview
 );
 router.delete("/review/:id", auth(...role), deleteReview);
-router.get("/", auth(...role), getBooks);
-router.get("/:id", auth(...role), getBookById);
+router.get("/", getBooks);
+router.get("/:id", getBookById);
 router.delete("/:id", auth(...role), deleteBookById);
 router.patch(
   "/:id",

@@ -45,7 +45,7 @@ export const deleteBook = async (
   if (bookFind.seller.toString() !== userId) {
     throw new ApiError(httpStatus.FORBIDDEN, "Forbidden Access");
   }
-  const result = await Book.findById({ _id: id });
+  const result = await Book.findByIdAndDelete({ _id: id });
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, "Book not found !");
   }
