@@ -34,6 +34,27 @@ const bookSchema = new mongoose_1.Schema({
         type: Number,
         required: true,
     },
+    reviews: [
+        {
+            name: {
+                type: String,
+                required: true,
+            },
+            rating: {
+                type: Number,
+                required: true,
+            },
+            message: {
+                type: String,
+                required: true,
+            },
+            user: {
+                type: mongoose_1.Schema.Types.ObjectId,
+                ref: "User",
+                required: true,
+            },
+        },
+    ],
     seller: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "User",

@@ -12,6 +12,8 @@ const book_controller_1 = require("./book.controller");
 const book_validation_1 = require("./book.validation");
 const router = express_1.default.Router();
 router.post("/", (0, Auth_1.auth)(...user_constant_1.role), (0, validateRequest_1.default)(book_validation_1.bookZodSchema), book_controller_1.createBook);
+router.post("/review/:id", (0, Auth_1.auth)(...user_constant_1.role), (0, validateRequest_1.default)(book_validation_1.reviewZodSchema), book_controller_1.createReview);
+router.delete("/review/:id", (0, Auth_1.auth)(...user_constant_1.role), book_controller_1.deleteReview);
 router.get("/", (0, Auth_1.auth)(...user_constant_1.role), book_controller_1.getBooks);
 router.get("/:id", (0, Auth_1.auth)(...user_constant_1.role), book_controller_1.getBookById);
 router.delete("/:id", (0, Auth_1.auth)(...user_constant_1.role), book_controller_1.deleteBookById);

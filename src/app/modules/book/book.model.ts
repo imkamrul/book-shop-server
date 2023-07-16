@@ -33,6 +33,27 @@ const bookSchema = new Schema<IBook>({
     type: Number,
     required: true,
   },
+  reviews: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      rating: {
+        type: Number,
+        required: true,
+      },
+      message: {
+        type: String,
+        required: true,
+      },
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+    },
+  ],
   seller: {
     type: Schema.Types.ObjectId,
     ref: "User",

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateBookById = exports.deleteBookById = exports.getBookById = exports.getBooks = exports.createBook = void 0;
+exports.deleteReview = exports.createReview = exports.updateBookById = exports.deleteBookById = exports.getBookById = exports.getBooks = exports.createBook = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../common/catchAsync"));
 const response_1 = __importDefault(require("../../common/response"));
@@ -68,6 +68,29 @@ exports.updateBookById = (0, catchAsync_1.default)((req, res) => __awaiter(void 
         success: true,
         statusCode: http_status_1.default.OK,
         message: "Books updated successfully",
+        data: result,
+    });
+}));
+exports.createReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const reviewData = req.body;
+    const id = req.params.id;
+    const result = yield (0, book_service_1.saveReview)(reviewData, id);
+    (0, response_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: "Book review added successfully",
+        data: result,
+    });
+}));
+exports.deleteReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c;
+    const userId = (_c = req.user) === null || _c === void 0 ? void 0 : _c.id;
+    const id = req.params.id;
+    const result = yield (0, book_service_1.deleteReviewByID)(userId, id);
+    (0, response_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: "Book review deleted successfully",
         data: result,
     });
 }));

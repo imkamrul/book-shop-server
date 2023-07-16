@@ -2,7 +2,7 @@ import httpStatus from "http-status";
 import { Types } from "mongoose";
 import ApiError from "../../errors/ApiError";
 import { User } from "../user/user.model";
-import { IBook } from "./book.interface";
+import { IBook, IReview } from "./book.interface";
 import { Book } from "./book.model";
 export const saveBook = async (book: IBook): Promise<IBook | null> => {
   const getUser = await User.findOne({ _id: book.seller });
@@ -39,14 +39,13 @@ export const deleteBook = async (
   userId: string
 ): Promise<IBook | null> => {
   const bookFind = await Book.findOne({ _id: id });
-
   if (!bookFind) {
     throw new ApiError(httpStatus.NOT_FOUND, "Book not found !");
   }
   if (bookFind.seller.toString() !== userId) {
     throw new ApiError(httpStatus.FORBIDDEN, "Forbidden Access");
   }
-  const result = await Book.findByIdAndDelete({ _id: id });
+  const result = await Book.findById({ _id: id });
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, "Book not found !");
   }
@@ -71,5 +70,35 @@ export const updateBook = async (
     new: true,
   });
 
+  return result;
+};
+
+export const saveReview = async (
+  reviewData: IReview,
+  id: string
+): Promise<IBook | null> => {
+  const result = await Book.findOneAndUpdate(
+    { _id: id },
+    { $push: { reviews: reviewData } },
+    { new: true }
+  );
+  return result;
+};
+export const deleteReviewByID = async (
+  userId: string,
+  id: string
+): Promise<IBook | null> => {
+  const findReviews = await Book.findOne({
+    "reviews._id": id,
+    "reviews.user": userId,
+  });
+  if (!findReviews) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Review not found !");
+  }
+  const result = await Book.findOneAndUpdate(
+    { "reviews._id": id },
+    { $pull: { reviews: { _id: id, user: userId } } },
+    { new: true }
+  );
   return result;
 };

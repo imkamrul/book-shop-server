@@ -5,9 +5,11 @@ import sendResponse from "../../common/response";
 import { IBook } from "./book.interface";
 import {
   deleteBook,
+  deleteReviewByID,
   getAllBook,
   getSingleBook,
   saveBook,
+  saveReview,
   updateBook,
 } from "./book.service";
 export const createBook: RequestHandler = catchAsync(
@@ -74,6 +76,34 @@ export const updateBookById: RequestHandler = catchAsync(
       success: true,
       statusCode: httpStatus.OK,
       message: "Books updated successfully",
+      data: result,
+    });
+  }
+);
+export const createReview: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const reviewData = req.body;
+    const id = req.params.id;
+    const result = await saveReview(reviewData, id);
+
+    sendResponse<IBook>(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Book review added successfully",
+      data: result,
+    });
+  }
+);
+export const deleteReview: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const userId = req.user?.id;
+    const id = req.params.id;
+    const result = await deleteReviewByID(userId, id);
+
+    sendResponse<IBook>(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Book review deleted successfully",
       data: result,
     });
   }

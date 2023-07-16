@@ -1,5 +1,5 @@
 import { Model } from "mongoose";
-export type IUserRole = "buyer" | "seller" | "admin";
+export type IUserRole = "default" | "buyer" | "seller" | "admin";
 export type IUser = {
   // id?: string;
   // _id?: string;

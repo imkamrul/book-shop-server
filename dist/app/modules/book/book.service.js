@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateBook = exports.deleteBook = exports.getAllBook = exports.getSingleBook = exports.saveBook = void 0;
+exports.deleteReviewByID = exports.saveReview = exports.updateBook = exports.deleteBook = exports.getAllBook = exports.getSingleBook = exports.saveBook = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const ApiError_1 = __importDefault(require("../../errors/ApiError"));
 const user_model_1 = require("../user/user.model");
@@ -50,7 +50,7 @@ const deleteBook = (id, userId) => __awaiter(void 0, void 0, void 0, function* (
     if (bookFind.seller.toString() !== userId) {
         throw new ApiError_1.default(http_status_1.default.FORBIDDEN, "Forbidden Access");
     }
-    const result = yield book_model_1.Book.findByIdAndDelete({ _id: id });
+    const result = yield book_model_1.Book.findById({ _id: id });
     if (!result) {
         throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Book not found !");
     }
@@ -71,3 +71,20 @@ const updateBook = (id, userId, payload) => __awaiter(void 0, void 0, void 0, fu
     return result;
 });
 exports.updateBook = updateBook;
+const saveReview = (reviewData, id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield book_model_1.Book.findOneAndUpdate({ _id: id }, { $push: { reviews: reviewData } }, { new: true });
+    return result;
+});
+exports.saveReview = saveReview;
+const deleteReviewByID = (userId, id) => __awaiter(void 0, void 0, void 0, function* () {
+    const findReviews = yield book_model_1.Book.findOne({
+        "reviews._id": id,
+        "reviews.user": userId,
+    });
+    if (!findReviews) {
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Review not found !");
+    }
+    const result = yield book_model_1.Book.findOneAndUpdate({ "reviews._id": id }, { $pull: { reviews: { _id: id, user: userId } } }, { new: true });
+    return result;
+});
+exports.deleteReviewByID = deleteReviewByID;
